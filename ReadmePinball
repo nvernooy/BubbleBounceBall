@@ -1,0 +1,25 @@
+a game almost kind of like pinball.
+the player runs around collecting ball before they roll off the egde, getting bumped around by badguys in 
+process.
+
+the player gets 2 points for getting a ball, and when he reaches 5 points he can collect a bonus ball that
+allows him to start shooting. a bonus ball is 3 points, and shooting a bad guy is 1 point.
+
+highscores are saved in a textfile and the player can try to beat it.
+the game ends when the player goes over the edge.
+
+movement is via the mouse, leftclick is shooting. the further the mouse is from the player the faster he 
+moves. spacebar is pause, escape is exit.
+
+the game also displays sound effects for collisions, a scoreboard, and bad guys increasing as the score 
+increases.
+
+bugs: 	if the sound  clips are too many the sound stops playing
+		the spacebar doesnt always pick up that it has been pressed
+		the highscores wont save to the file
+		sometimes the bad guys wont bounce of and stick to each other, or the player moves underneath a badguy
+		when the final score is printed out it doesnt display lekker
+		a limit is set to the number of badguys, but sometimes this is exceeded
+		
+		
+enjoy

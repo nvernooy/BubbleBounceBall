@@ -1,0 +1,19 @@
+Readme of SuvivalGame with improved collision detection:
+
+
+naive checks for collision is done in the collisions() method
+these are checks that see if the object is already destroyed, as well as a spatial check whether the objects
+are within a certian radius of each other.
+once these checks are passed the collisionDetection() method is called
+
+sprite bounding and pixel level tests are done in the collisionDetection() method
+bounding boxes are checked to see if the intersect
+next pixel level testing is done with the bitmasks of the objects textures
+each pixel in the intersection area is compared relatively to the pixels in the bounding boxes
+if both pixels are not transparent, eg a 1 one the bitmask, it is registered as a collision
+
+
+futhermore some changes were made:
+the intersection method used originally was replaced by the createIntersection method for rectangles
+during initialisation collisions are checked between rocks so that it does not have to be done during gameplay
+some redundant code was removed to streamline the program
