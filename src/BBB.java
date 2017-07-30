@@ -1,4 +1,4 @@
-import sun.audio.*; 
+import sun.audio.*;
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -15,10 +15,8 @@ import GameEngine.GameObject;
 import GameEngine.GameTexture;
 
 
-//==================================================================================================
-//==================================================================================================
-
-public class Pinball extends Game
+// BubbleBounceBall game
+public class BBB extends Game
 {
 	// Offset of the screen
 	private Point2D.Float offset = new Point2D.Float(0,0);
@@ -67,7 +65,7 @@ public class Pinball extends Game
 
 	//==================================================================================================
 
-	public Pinball (int GFPS) {
+	public BBB (int GFPS) {
 		super(GFPS);
 	}
 
@@ -116,7 +114,7 @@ public class Pinball extends Game
 	// create some obstacles in the world, only a certian number at fixed points
 	private void newObstacles() {
 		ObstacleObject ob1 = new ObstacleObject(centre.x+180, centre.y+100);
-		ob1.addTexture(wallTexture);		
+		ob1.addTexture(wallTexture);
 		addObstacleToGrid(ob1);				// adding the obstacle to the grid used in pathfinding
 		objects.add(ob1);
 
@@ -161,17 +159,17 @@ public class Pinball extends Game
 	public synchronized void playSound(final URL soundurl) {
 		try {
 			AudioStream clip = new AudioStream(soundurl.openStream());
-			AudioPlayer.player.start(clip); 
+			AudioPlayer.player.start(clip);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 
-	// this method is used to fire a bullet 
+	// this method is used to fire a bullet
 	public void fireBullet() throws Exception {
 		// play the sound when a bullet is fired
-		URL bulleturl =  Pinball.class.getResource("beep2.wav");
+		URL bulleturl =  BBB.class.getResource("beep2.wav");
 		playSound(bulleturl);
 
 		cooldownTimer = cooldown;
@@ -183,7 +181,7 @@ public class Pinball extends Game
 
 		bullet.applyForceInDirection(dir, 10f);
 
-		objects.add(bullet); 
+		objects.add(bullet);
 
 		counter.shoot();
 	}
@@ -290,7 +288,7 @@ public class Pinball extends Game
 		try{
 			//For every object that you want to be rendered, you must call the draw function with it as a parameter
 			// NOTE: Always draw transparent objects last!
-			// Offsetting the world so that all objects are drawn 
+			// Offsetting the world so that all objects are drawn
 			drawer.setWorldOffset(offset.x, offset.y);
 			drawer.setColour(1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -326,7 +324,7 @@ public class Pinball extends Game
 						drawer.draw(GameDrawer.LINES, path1, lineColours[0], 0.9f);
 
 						Float[] path2 = {path[0], path[1]};
-						drawer.draw(GameDrawer.LINES, path2, lineColours[0], 0.9f);			
+						drawer.draw(GameDrawer.LINES, path2, lineColours[0], 0.9f);
 
 						Float[] path3 = {path[1], path[2]};
 						drawer.draw(GameDrawer.LINES, path3, lineColours[0], 0.9f);
@@ -350,18 +348,18 @@ public class Pinball extends Game
 			// draw these messages depending on wether the player is still alive
 			if (player!=null&&counter.alive) {
 				drawer.draw(score, ""+player.getDirection(), new Point2D.Float(20,100), 0f, 0f, 0f, 1f, 0.1f);
-				drawer.draw(serif, ""+mousePos.x +":"+mousePos.y, new Point2D.Float(20,20), 0f, 0f, 0f, 1f, 0.7f, 0.1f);		
+				drawer.draw(serif, ""+mousePos.x +":"+mousePos.y, new Point2D.Float(20,20), 0f, 0f, 0f, 1f, 0.7f, 0.1f);
 			}
 			else{
 				drawer.draw(score, "YOURE DEAD", new Point2D.Float(20,100), 250f, 0f, 0f, 1f, 0.1f);
-				drawer.draw(serif, "Press esc to quit", new Point2D.Float(20,20), 0f, 0f, 0f, 1f, 0.7f, 0.1f);	
+				drawer.draw(serif, "Press esc to quit", new Point2D.Float(20,20), 0f, 0f, 0f, 1f, 0.7f, 0.1f);
 
 				int high = highscore.getHighScore();
 
 				if (counter.score>high)
-					drawer.draw(finalmsg, "CONGATULATIONS: YOU MADE A NEW HIGH SCORE!!", new Point2D.Float(50,400), 250f, 0f, 0f, 1f, 1f, 0.1f);	
+					drawer.draw(finalmsg, "CONGATULATIONS: YOU MADE A NEW HIGH SCORE!!", new Point2D.Float(50,400), 250f, 0f, 0f, 1f, 1f, 0.1f);
 				else
-					drawer.draw(finalmsg, "The high score is "+high+".You didnt make it", new Point2D.Float(50,400), 250f, 0f, 0f, 1f, 1f, 0.1f);	
+					drawer.draw(finalmsg, "The high score is "+high+".You didnt make it", new Point2D.Float(50,400), 250f, 0f, 0f, 1f, 1f, 0.1f);
 			}
 			drawer.draw(score, "SCORE: "+counter.score, new Point2D.Float(20,60), 0f, 0f, 0f, 1f, 0.1f);
 			drawer.draw(noOfBullets, "No of bullets: "+counter.bullets, new Point2D.Float(20,130), 0f, 0f, 0f, 1f, 0.1f);
@@ -393,7 +391,7 @@ public class Pinball extends Game
 		int r2bx = subimageoffset2.x + inter.x - r2.x;
 		int r2by = subimageoffset2.y + inter.y - r2.y;
 
-		outer : 
+		outer :
 			for (int i = 0 ; i < inter.height ; i++) {
 				for (int j = 0 ; j < inter.width ; j++) {
 					int b1 = 0;
@@ -501,7 +499,7 @@ public class Pinball extends Game
 		// collision between bullet and object
 		if (o1 instanceof BulletObject || o2 instanceof BulletObject){
 			// both bullet and whatever else destroyed
-			o1.setMarkedForDestruction(true); 
+			o1.setMarkedForDestruction(true);
 			o2.setMarkedForDestruction(true);
 			// if its a wall dont destroy
 			if (o1 instanceof ObstacleObject )o1.setMarkedForDestruction(false);
@@ -529,8 +527,8 @@ public class Pinball extends Game
 		else{
 			target.setActiveTexture(1);
 			// sound when target collided
-			URL crashurl =Pinball.class.getResource("crash.wav"); 
-			playSound(crashurl); 
+			URL crashurl =BBB.class.getResource("crash.wav");
+			playSound(crashurl);
 
 			if (o1 instanceof TargetObject){
 				o1.setMarkedForDestruction(true);
@@ -541,7 +539,7 @@ public class Pinball extends Game
 						counter.score++;	// another piont for shooting bonus
 					}
 				}
-			}		
+			}
 			else{
 				o2.setMarkedForDestruction(true);
 				if (o1 instanceof PlayerObject || o1 instanceof BulletObject){
@@ -556,7 +554,7 @@ public class Pinball extends Game
 	}
 
 	// objects bounce of each other
-	private void bounce(GameObject o1, GameObject o2) {	
+	private void bounce(GameObject o1, GameObject o2) {
 		PhysicalObject temp1 = (PhysicalObject) o1;
 		PhysicalObject temp2 = (PhysicalObject) o2;
 
@@ -569,7 +567,7 @@ public class Pinball extends Game
 				player.revertPosition();
 			}
 			else if(o2 instanceof BadGuyObject){
-				temp2.setVelocity (-(temp2.getVelocity().x)*1.3f, -(temp2.getVelocity().y)*1.3f);			
+				temp2.setVelocity (-(temp2.getVelocity().x)*1.3f, -(temp2.getVelocity().y)*1.3f);
 			}
 			else {
 				temp1.setVelocity (-(temp1.getVelocity().x)*1.3f, -(temp1.getVelocity().y)*1.3f);
@@ -597,7 +595,7 @@ public class Pinball extends Game
 
 		// play sound
 		try {
-			URL boinkurl =  Pinball.class.getResource("boink3.wav");
+			URL boinkurl =  BBB.class.getResource("boink3.wav");
 			playSound(boinkurl);
 		}
 		catch(Exception e){counter.noOfBadguys = 100;}
@@ -612,12 +610,12 @@ public class Pinball extends Game
 		// chasing a bonus ball is highest priority
 		if (target.isbonus){
 			ObstacleObject obs = isObstacleInArea(badguy, target); 	// check if there is a obstacle in the general area
-			badguy.decisionMaking(obs, target);						// finalise decisions and paths in object method	
+			badguy.decisionMaking(obs, target);						// finalise decisions and paths in object method
 		}
 		// else chase the player
 		else {
 			ObstacleObject obs = isObstacleInArea(badguy, player);
-			badguy.decisionMaking(obs, player);					
+			badguy.decisionMaking(obs, player);
 		}
 	}
 

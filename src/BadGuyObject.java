@@ -30,7 +30,7 @@ public class BadGuyObject extends PhysicalObject {
 
 	// the badguy moves to a point, first checking other conditions
 	private void moveToPoint(Point2D.Float p, Point2D.Float tv){
-		float v = (float) Math.pow((double) (super.getPosition().distance (centre))/200, 1.5);
+		float v = (float) Math.pow(super.getPosition().distance (centre)/200, 1.5);
 
 		// if the target velocity is null it means the target is around a corner
 		// so the badguy simply moves to the corner
@@ -55,7 +55,7 @@ public class BadGuyObject extends PhysicalObject {
 	}
 
 	// decide what point to move to, and what path to take
-	public void decisionMaking(ObstacleObject obstacle, PhysicalObject target) {		
+	public void decisionMaking(ObstacleObject obstacle, PhysicalObject target) {
 		// TODO Auto-generated method stub
 		try{
 			LinkedList<Point2D.Float> path = new LinkedList<Point2D.Float>();
@@ -72,7 +72,7 @@ public class BadGuyObject extends PhysicalObject {
 				if (this.getPosition().distance (centre)>(radius-50.0))
 					path.addFirst(centre);
 				// otherwise move to the target
-				else{				
+				else{
 					path.addFirst(target.getPosition());
 					velcty = target.velocity;
 				}
@@ -81,7 +81,7 @@ public class BadGuyObject extends PhysicalObject {
 			else if (target instanceof TargetObject){
 				// set on alert for target
 				this.setActiveTexture(1);
-				
+
 				// if there are obstacle in the way compute path
 				if (obstacle.isInPath(this.getPosition(), target.getPosition()))
 					path = obstacle.getPath(this.position, target.getPosition());
@@ -105,12 +105,12 @@ public class BadGuyObject extends PhysicalObject {
 					velcty = player.velocity;
 				}
 			}
-			
+
 			// move to the first point
 			lines = path;
 			this.moveToPoint(path.getFirst(), velcty);
 		}
-		catch(Exception e){} 
+		catch(Exception e){}
 	}
 
 
